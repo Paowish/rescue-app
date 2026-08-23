@@ -1,0 +1,7 @@
+{
+  "name": "rescue-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

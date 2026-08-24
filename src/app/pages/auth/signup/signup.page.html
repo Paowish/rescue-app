@@ -1,0 +1,163 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon icon="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="signup-container">
+
+    <!-- Logo & Header -->
+    <div class="header-section">
+      <div class="logo-container">
+        <ion-img src="assets/icon/logo.png" alt="Rescue Team" class="logo"></ion-img>
+      </div>
+      <h1 class="title">Create Account</h1>
+      <p class="subtitle">Join the Santa Rosa Rescue Team</p>
+    </div>
+
+    <!-- Error Message -->
+    @if (errorMessage()) {
+    <ion-text color="danger" class="error-text">
+      <p>{{ errorMessage() }}</p>
+    </ion-text>
+    }
+
+    <!-- Signup Form -->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <!-- First Name & Last Name -->
+      <ion-grid class="name-grid">
+        <ion-row>
+          <ion-col size="12" sizeMd="6">
+            <ion-item class="form-item" lines="none">
+              <ion-icon icon="person-outline" slot="start" color="medium"></ion-icon>
+              <ion-input label="First Name" labelPlacement="floating" formControlName="firstName" type="text"
+                placeholder="John"></ion-input>
+            </ion-item>
+            @if (firstName?.touched && firstName?.invalid) {
+            <ion-text color="danger" class="validation-error">
+              <small>First name is required (min 2 characters)</small>
+            </ion-text>
+            }
+          </ion-col>
+          <ion-col size="12" sizeMd="6">
+            <ion-item class="form-item" lines="none">
+              <ion-icon icon="person-outline" slot="start" color="medium"></ion-icon>
+              <ion-input label="Last Name" labelPlacement="floating" formControlName="lastName" type="text"
+                placeholder="Doe"></ion-input>
+            </ion-item>
+            @if (lastName?.touched && lastName?.invalid) {
+            <ion-text color="danger" class="validation-error">
+              <small>Last name is required (min 2 characters)</small>
+            </ion-text>
+            }
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Email -->
+      <ion-item class="form-item" lines="none">
+        <ion-icon icon="mail-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Email Address" labelPlacement="floating" formControlName="email" type="email"
+          placeholder="john.doe@gmail.com"></ion-input>
+      </ion-item>
+      @if (email?.touched && email?.invalid) {
+      <ion-text color="danger" class="validation-error">
+        <small>
+          @if (email?.errors?.['required']) { Email is required }
+          @else if (email?.errors?.['email']) { Please enter a valid email address }
+        </small>
+      </ion-text>
+      }
+
+      <!-- Phone Number -->
+      <ion-item class="form-item" lines="none">
+        <ion-icon icon="call-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Phone Number" labelPlacement="floating" formControlName="phoneNumber" type="tel"
+          placeholder="9123456789"></ion-input>
+      </ion-item>
+      @if (phoneNumber?.touched && phoneNumber?.invalid) {
+      <ion-text color="danger" class="validation-error">
+        <small>Enter a valid phone number (10-11 digits)</small>
+      </ion-text>
+      }
+
+      <!-- Role Selection -->
+      <ion-item class="form-item" lines="none">
+        <ion-icon icon="person-outline" slot="start" color="medium"></ion-icon>
+        <ion-select label="Role" labelPlacement="floating" formControlName="role" interface="popover"
+          placeholder="Select your role">
+          <ion-select-option value="civilian">Civilian</ion-select-option>
+          <ion-select-option value="volunteer">Volunteer</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Password -->
+      <ion-item class="form-item" lines="none">
+        <ion-icon icon="lock-closed-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Password" labelPlacement="floating" formControlName="password"
+          [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password"></ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePassword()">
+          <ion-icon [icon]="showPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      @if (password?.touched && password?.invalid) {
+      <ion-text color="danger" class="validation-error">
+        <small>Password must be at least 8 characters</small>
+      </ion-text>
+      }
+
+      <!-- Confirm Password -->
+      <ion-item class="form-item" lines="none">
+        <ion-icon icon="lock-closed-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Confirm Password" labelPlacement="floating" formControlName="confirmPassword"
+          [type]="showConfirmPassword() ? 'text' : 'password'" placeholder="Confirm your password"></ion-input>
+        <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()">
+          <ion-icon [icon]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      @if (signupForm.hasError('passwordMismatch') && confirmPassword?.touched) {
+      <ion-text color="danger" class="validation-error">
+        <small>Passwords do not match</small>
+      </ion-text>
+      }
+
+      <!-- Terms and Conditions -->
+      <div class="terms-section">
+        <ion-item lines="none" class="terms-item">
+          <ion-checkbox [(ngModel)]="termsAccepted" [ngModelOptions]="{standalone: true}">
+            I agree to all the
+            <ion-text color="danger" class="terms-link">Terms</ion-text>
+            and
+            <ion-text color="danger" class="terms-link">Privacy Policies</ion-text>
+          </ion-checkbox>
+        </ion-item>
+      </div>
+
+      <!-- Signup Button -->
+      <ion-button expand="block" type="submit" [disabled]="isLoading() || signupForm.invalid" class="signup-btn">
+        @if (isLoading()) {
+        <ion-spinner name="crescent"></ion-spinner>
+        } @else {
+        Create Account
+        }
+      </ion-button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="footer-links">
+      <p>
+        Already have an account?
+        <ion-text color="primary" (click)="goToLogin()" class="link-text">
+          Login
+        </ion-text>
+      </p>
+    </div>
+  </div>
+</ion-content>

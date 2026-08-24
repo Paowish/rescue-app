@@ -46,7 +46,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -58,8 +57,7 @@
             "development": {
               "optimization": false,
               "sourceMap": true,
-              "namedChunks": true,
-              "buildOptimizer": false
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"

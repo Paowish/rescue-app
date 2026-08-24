@@ -1,6 +1,6 @@
 {
+    "framework": "angular",
     "installCommand": "npm install --legacy-peer-deps",
     "buildCommand": "npm run build",
-    "outputDirectory": "dist/rescue-app",
-    "framework": "angular"
+    "outputDirectory": "dist/rescue-app"
 }

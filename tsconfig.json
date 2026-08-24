@@ -13,11 +13,14 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node", // ✅ CHANGED from "bundler" to "node"
     "importHelpers": true,
-    "target": "es2022",
-    "module": "es2020",
-    "lib": ["es2022", "dom"],
+    "target": "ES2022",
+    "module": "ES2022", // ✅ CHANGED from "es2020" to "ES2022"
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "useDefineForClassFields": false
   },
